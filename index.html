@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bikash Paul — Senior Full Stack Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1120;
+    --panel:#101A2E;
+    --panel-raised:#152238;
+    --line:#24314A;
+    --line-soft:#1B2740;
+    --text:#E7ECF5;
+    --text-muted:#8B96AC;
+    --text-dim:#5C6A85;
+    --accent:#F2A65A;
+    --accent-dim:#8A6438;
+    --ok:#5EEAD4;
+    --ok-dim:#2E6F65;
+    --get:#5EA1EA;
+    --post:#5EEAD4;
+    --put:#F2A65A;
+    --mono:'IBM Plex Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent); color:#0B1120;}
+
+  a{color:inherit; text-decoration:none;}
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,17,32,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width:920px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+  }
+  .brand{
+    font-family:var(--mono); font-size:14px; font-weight:600;
+    color:var(--text); display:flex; align-items:center; gap:10px;
+  }
+  .brand .dot{
+    width:8px; height:8px; border-radius:50%; background:var(--ok);
+    box-shadow:0 0 0 3px rgba(94,234,212,0.15);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:1;} 50%{opacity:0.45;}
+  }
+  nav.routes{display:flex; gap:2px; flex-wrap:wrap;}
+  nav.routes a{
+    font-family:var(--mono); font-size:12.5px; color:var(--text-muted);
+    padding:7px 10px; border-radius:5px; transition:all .15s ease;
+  }
+  nav.routes a:hover{color:var(--text); background:var(--panel-raised);}
+  .status-pill{
+    font-family:var(--mono); font-size:11px; color:var(--ok);
+    border:1px solid var(--ok-dim); background:rgba(94,234,212,0.06);
+    padding:5px 10px; border-radius:20px; white-space:nowrap;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:76px 0 56px; border-bottom:1px solid var(--line-soft);}
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; color:var(--accent);
+    letter-spacing:0.06em; margin-bottom:18px; display:flex; gap:10px; align-items:center;
+  }
+  .eyebrow::before{content:'GET'; background:var(--get); color:#0B1120; font-weight:700;
+    padding:2px 7px; border-radius:4px; font-size:11px;}
+  .json-block{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:10px; padding:26px 28px; font-family:var(--mono);
+    font-size:14px; color:var(--text-muted); overflow-x:auto;
+    box-shadow:0 20px 40px -20px rgba(0,0,0,0.5);
+  }
+  .json-block .k{color:#7FB4E8;}
+  .json-block .s{color:var(--accent);}
+  .json-block .b{color:var(--ok);}
+  .json-block .punc{color:var(--text-dim);}
+  h1.name{
+    font-family:var(--mono); font-size:clamp(32px,5vw,52px);
+    font-weight:700; color:var(--text); margin:28px 0 8px; letter-spacing:-0.01em;
+  }
+  .role{font-size:18px; color:var(--text-muted); margin-bottom:24px; max-width:640px;}
+  .role strong{color:var(--text); font-weight:600;}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13px; padding:11px 18px;
+    border-radius:7px; display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--line); transition:all .15s ease;
+  }
+  .btn-primary{background:var(--accent); color:#1A1102; border-color:var(--accent); font-weight:600;}
+  .btn-primary:hover{background:#F5B876;}
+  .btn-ghost{color:var(--text-muted);}
+  .btn-ghost:hover{color:var(--text); border-color:var(--text-dim);}
+  .btn .method{opacity:0.7; font-size:11px;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:64px 0; border-bottom:1px solid var(--line-soft);}
+  .sec-label{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    letter-spacing:0.08em; margin-bottom:10px;
+  }
+  h2.sec-title{
+    font-size:clamp(22px,3vw,28px); font-weight:700; color:var(--text);
+    margin-bottom:28px; letter-spacing:-0.01em;
+  }
+  .lede{color:var(--text-muted); max-width:660px; margin-bottom:8px;}
+
+  /* ---------- EXPERIENCE (endpoint cards) ---------- */
+  .endpoint{
+    border:1px solid var(--line); border-radius:10px; margin-bottom:18px;
+    background:var(--panel); overflow:hidden;
+  }
+  .endpoint-head{
+    display:flex; align-items:center; gap:12px; padding:16px 20px;
+    border-bottom:1px solid var(--line-soft); flex-wrap:wrap;
+  }
+  .method-badge{
+    font-family:var(--mono); font-size:11.5px; font-weight:700;
+    padding:4px 9px; border-radius:5px; color:#0B1120;
+  }
+  .m-post{background:var(--post);}
+  .m-put{background:var(--put);}
+  .m-patch{background:#C9A6F2;}
+  .route-path{font-family:var(--mono); font-size:14.5px; color:var(--text); font-weight:500;}
+  .status-tag{
+    margin-left:auto; font-family:var(--mono); font-size:11.5px;
+    color:var(--ok); border:1px solid var(--ok-dim); padding:3px 8px; border-radius:5px;
+  }
+  .endpoint-body{padding:18px 20px 20px;}
+  .role-line{
+    display:flex; justify-content:space-between; align-items:baseline;
+    flex-wrap:wrap; gap:6px; margin-bottom:4px;
+  }
+  .role-title{font-weight:700; font-size:16px; color:var(--text);}
+  .role-dates{font-family:var(--mono); font-size:12.5px; color:var(--text-dim);}
+  .role-context{color:var(--text-muted); font-size:14px; margin-bottom:14px; font-style:italic;}
+  ul.bullets{list-style:none; margin:0 0 14px;}
+  ul.bullets li{
+    position:relative; padding-left:18px; margin-bottom:8px;
+    color:var(--text-muted); font-size:14.5px;
+  }
+  ul.bullets li::before{
+    content:'→'; position:absolute; left:0; color:var(--accent); font-family:var(--mono);
+  }
+  .tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;}
+  .tag{
+    font-family:var(--mono); font-size:11px; color:var(--text-muted);
+    background:var(--panel-raised); border:1px solid var(--line);
+    padding:4px 9px; border-radius:20px;
+  }
+
+  /* ---------- SKILLS (payload) ---------- */
+  .payload{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:26px 28px;
+  }
+  .payload-row{
+    display:flex; gap:18px; padding:14px 0; border-bottom:1px solid var(--line-soft);
+    flex-wrap:wrap; align-items:baseline;
+  }
+  .payload-row:last-child{border-bottom:none;}
+  .payload-key{
+    font-family:var(--mono); font-size:13px; color:var(--get); min-width:170px; flex-shrink:0;
+  }
+  .payload-val{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{
+    font-size:13px; color:var(--text); background:var(--panel-raised);
+    border:1px solid var(--line); padding:5px 11px; border-radius:6px;
+  }
+
+  /* ---------- CASE STUDIES ---------- */
+  .case{
+    border:1px solid var(--line); border-radius:10px; background:var(--panel);
+    margin-bottom:22px; overflow:hidden;
+  }
+  .case-head{
+    padding:18px 22px; border-bottom:1px solid var(--line-soft);
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .case-num{
+    font-family:var(--mono); font-size:12px; color:var(--accent);
+    border:1px solid var(--accent-dim); padding:3px 9px; border-radius:5px;
+  }
+  .case-title{font-weight:700; font-size:17px; color:var(--text);}
+  .case-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:0;
+  }
+  .case-col{padding:20px 22px;}
+  .case-col + .case-col{border-left:1px solid var(--line-soft);}
+  .case-label{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em;
+    color:var(--text-dim); margin-bottom:10px;
+  }
+  .case-col.problem .case-label{color:#E88A8A;}
+  .case-col.approach .case-label{color:var(--get);}
+  .case-full{border-top:1px solid var(--line-soft); padding:20px 22px;}
+  .case-full .case-label{color:var(--ok);}
+  .placeholder{
+    color:var(--text-dim); font-size:13.5px; font-style:italic; line-height:1.7;
+  }
+  .placeholder .fill{color:var(--accent); font-style:normal; font-family:var(--mono); font-size:12.5px;}
+  .case-metrics{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .metric{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim);
+    border:1px dashed var(--line); padding:6px 10px; border-radius:6px;
+  }
+  .howto{
+    margin-top:36px; padding:20px 22px; border:1px dashed var(--line);
+    border-radius:10px; background:rgba(242,166,90,0.04);
+  }
+  .howto .sec-label{color:var(--accent);}
+  .howto p{color:var(--text-muted); font-size:14px; margin-bottom:8px;}
+  .howto ol{color:var(--text-muted); font-size:14px; padding-left:20px;}
+  .howto li{margin-bottom:6px;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{padding:60px 0 50px;}
+  .response-block{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:28px; font-family:var(--mono); font-size:13.5px;
+  }
+  .resp-status{color:var(--ok); margin-bottom:14px; font-weight:600;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+  .contact-links a{
+    color:var(--text-muted); border:1px solid var(--line); padding:9px 14px;
+    border-radius:7px; font-size:13px; transition:all .15s ease;
+  }
+  .contact-links a:hover{color:var(--text); border-color:var(--text-dim);}
+  .foot-note{color:var(--text-dim); font-size:12.5px; margin-top:32px; text-align:center;}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1; transform:none; transition:none;}
+    .brand .dot{animation:none;}
+  }
+
+  @media (max-width:720px){
+    .case-grid{grid-template-columns:1fr;}
+    .case-col + .case-col{border-left:none; border-top:1px solid var(--line-soft);}
+    .payload-key{min-width:auto;}
+    nav.routes{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span> bikash-paul-api</div>
+    <nav class="routes">
+      <a href="#about">/about</a>
+      <a href="#experience">/experience</a>
+      <a href="#skills">/skills</a>
+      <a href="#case-studies">/case-studies</a>
+      <a href="#contact">/contact</a>
+    </nav>
+    <div class="status-pill">● 200 OK — open to work</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero" id="about">
+    <div class="eyebrow">/about · 200 OK</div>
+    <div class="json-block">
+<span class="punc">{</span><br>
+&nbsp;&nbsp;<span class="k">"name"</span><span class="punc">:</span> <span class="s">"Bikash Paul"</span><span class="punc">,</span><br>
+&nbsp;&nbsp;<span class="k">"title"</span><span class="punc">:</span> <span class="s">"Senior Full Stack Engineer"</span><span class="punc">,</span><br>
+&nbsp;&nbsp;<span class="k">"experience_years"</span><span class="punc">:</span> <span class="b">10+</span><span class="punc">,</span><br>
+&nbsp;&nbsp;<span class="k">"experience_since"</span><span class="punc">:</span> <span class="s">"Jun 2016"</span><span class="punc">,</span><br>
+&nbsp;&nbsp;<span class="k">"stack"</span><span class="punc">:</span> <span class="punc">[</span><span class="s">"Java"</span><span class="punc">,</span> <span class="s">"Spring Boot"</span><span class="punc">,</span> <span class="s">"React"</span><span class="punc">,</span> <span class="s">"Angular"</span><span class="punc">]</span><span class="punc">,</span><br>
+&nbsp;&nbsp;<span class="k">"domain"</span><span class="punc">:</span> <span class="s">"Healthcare & Pharmacy platforms"</span><span class="punc">,</span><br>
+&nbsp;&nbsp;<span class="k">"focus"</span><span class="punc">:</span> <span class="s">"AI-assisted development, LLM-integrated systems"</span><span class="punc">,</span><br>
+&nbsp;&nbsp;<span class="k">"location"</span><span class="punc">:</span> <span class="s">"India — open to U.S. remote "</span><br>
+<span class="punc">}</span>
+    </div>
+    <h1 class="name">Bikash Paul</h1>
+    <p class="role">Senior <strong>Java / Spring Boot</strong> engineer building enterprise-grade healthcare platforms, with <strong>React</strong> and <strong>Angular</strong> across the front end. Over 10 years turning complex clinical and pharmacy workflows into reliable, well-documented systems — now applying that same rigor to AI-assisted engineering.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:bikashpaul758@gmail.com"><span class="method">POST</span> /contact</a>
+      <a class="btn btn-ghost" href="./Bikash_Paul_Resume.pdf" download="Bikash_Paul_Resume.pdf"><span class="method">GET</span> /resume.pdf</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/bikash-paul-6290a4113" target="_blank" rel="noopener"><span class="method">GET</span> /linkedin</a>
+      <a class="btn btn-ghost" href="https://github.com/bikashpaul101" target="_blank" rel="noopener"><span class="method">GET</span> /github</a>
+    </div>
+  </section>
+
+  <section id="experience" class="reveal">
+    <div class="sec-label">/experience</div>
+    <h2 class="sec-title">Professional Experience</h2>
+
+    <div class="endpoint">
+      <div class="endpoint-head">
+        <span class="method-badge m-post">CURRENT</span>
+        <span class="route-path">/experience/healthasyst</span>
+        <span class="status-tag">200 OK</span>
+      </div>
+      <div class="endpoint-body">
+        <div class="role-line">
+          <span class="role-title">Technical Lead · HealthAsyst</span>
+          <span class="role-dates">Jul 2018 – Present</span>
+        </div>
+        <div class="role-context">Healthcare & pharmacy-domain platforms — patient portals, analytics dashboards, microservices</div>
+        <ul class="bullets">
+          <li>Designed and built RESTful APIs with Spring Boot, Hibernate, and Java for enterprise healthcare workflows</li>
+          <li>Implemented authentication, authorization, and role-based access control for patient and provider portals</li>
+          <li>Built reusable frontend modules in Angular, AngularJS, and React, and analytics apps with React + Python Flask</li>
+          <li>Introduced GenAI-assisted development workflows to lift engineering productivity without compromising quality</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Angular</span><span class="tag">React</span><span class="tag">Flask</span><span class="tag">MySQL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-head">
+        <span class="method-badge m-put">2017–18</span>
+        <span class="route-path">/experience/mscripts</span>
+        <span class="status-tag">200 OK</span>
+      </div>
+      <div class="endpoint-body">
+        <div class="role-line">
+          <span class="role-title">Associate Software Engineer · mscripts Systems India</span>
+          <span class="role-dates">Nov 2017 – May 2018</span>
+        </div>
+        <div class="role-context">Pharmacy management and communication platforms</div>
+        <ul class="bullets">
+          <li>Enhanced AngularJS applications and built reusable UI modules</li>
+          <li>Implemented backend integrations and optimized SQL stored procedures</li>
+          <li>Resolved production defects and shipped client-specific enhancements</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Java</span><span class="tag">Spring MVC</span><span class="tag">AngularJS</span><span class="tag">MySQL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <div class="endpoint-head">
+        <span class="method-badge m-patch">2016–17</span>
+        <span class="route-path">/experience/keyfalcon</span>
+        <span class="status-tag">200 OK</span>
+      </div>
+      <div class="endpoint-body">
+        <div class="role-line">
+          <span class="role-title">Associate Software Engineer · Keyfalcon Solutions</span>
+          <span class="role-dates">Jun 2016 – Nov 2017</span>
+        </div>
+        <div class="role-context">E-commerce and booking platforms</div>
+        <ul class="bullets">
+          <li>Built frontend modules in Angular and REST APIs for core booking workflows</li>
+          <li>Implemented DAO layers with Hibernate and JPA for reliable data persistence</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Angular</span><span class="tag">Hibernate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="reveal">
+    <div class="sec-label">/skills · response payload</div>
+    <h2 class="sec-title">Technical Skills</h2>
+    <div class="payload">
+      <div class="payload-row">
+        <span class="payload-key">"languages"</span>
+        <div class="payload-val"><span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">SQL</span><span class="chip">Python</span></div>
+      </div>
+      <div class="payload-row">
+        <span class="payload-key">"backend"</span>
+        <div class="payload-val"><span class="chip">Spring Boot</span><span class="chip">Spring MVC</span><span class="chip">Spring Security</span><span class="chip">Hibernate</span><span class="chip">JPA</span><span class="chip">REST APIs</span><span class="chip">Microservices</span><span class="chip">Flask</span></div>
+      </div>
+      <div class="payload-row">
+        <span class="payload-key">"frontend"</span>
+        <div class="payload-val"><span class="chip">React</span><span class="chip">Angular</span><span class="chip">AngularJS</span><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">jQuery</span></div>
+      </div>
+      <div class="payload-row">
+        <span class="payload-key">"database"</span>
+        <div class="payload-val"><span class="chip">MySQL</span><span class="chip">Stored Procedures</span></div>
+      </div>
+      <div class="payload-row">
+        <span class="payload-key">"tooling"</span>
+        <div class="payload-val"><span class="chip">Git</span><span class="chip">Maven</span><span class="chip">Webpack</span><span class="chip">Postman</span><span class="chip">VS Code</span></div>
+      </div>
+      <div class="payload-row">
+        <span class="payload-key">"ai_focus"</span>
+        <div class="payload-val"><span class="chip">AI-assisted development</span><span class="chip">LLM-integrated apps</span><span class="chip">Prompt engineering</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="case-studies" class="reveal">
+    <div class="sec-label">/case-studies</div>
+    <h2 class="sec-title">Case Studies</h2>
+    <p class="lede" style="margin-bottom:28px;">Real migrations, refactors, and lessons from 10+ years across healthcare, e-commerce, and booking platforms.</p>
+
+    <div class="case">
+      <div class="case-head">
+        <span class="case-num">CASE 01</span>
+        <span class="case-title">Java 6 → Java 21: modernizing a legacy monolith at HealthAsyst</span>
+      </div>
+      <div class="case-grid">
+        <div class="case-col problem">
+          <div class="case-label">// problem</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">A large enterprise application had been running on Java 6 for years — well past its supported life, missing modern JVM performance and security improvements, and written in a style (verbose boilerplate, nested loops, manual iteration) that made it slow to extend and hard to reason about. It also existed as a single deployable monolith, which meant even small changes carried the risk and overhead of a full redeploy.</p>
+        </div>
+        <div class="case-col approach">
+          <div class="case-label">// approach</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">Led the migration from Java 6 to Java 21 LTS, working through the usual pain points of that jump: replacing APIs deprecated or removed across major versions, rewriting Java-6-era loop and collection patterns with the Stream API and lambdas, and eliminating nested loops and other O(n²)-style patterns in favor of more efficient algorithms. In parallel, split the single monolith into multiple independent Spring Boot services organized by business capability — not true microservices, since all services still share one underlying database, but enough separation to deploy and scale pieces of the system independently.</p>
+        </div>
+      </div>
+      <div class="case-full">
+        <div class="case-label">// result</div>
+        <p class="placeholder" style="font-style:normal; color:var(--text-muted);">A codebase running on a currently supported LTS release, measurably leaner after removing inefficient loop and object-handling patterns, and now deployable service-by-service instead of as one large release. Recently concluded work.</p>
+        <div class="tags">
+          <span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Legacy modernization</span><span class="tag">Performance tuning</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <span class="case-num">CASE 02</span>
+        <span class="case-title">AngularJS → React: aligning the frontend stack across the client's platforms</span>
+      </div>
+      <div class="case-grid">
+        <div class="case-col problem">
+          <div class="case-label">// problem</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">The client's other web applications had already standardized on React, leaving this AngularJS app as the odd one out — harder to staff, harder to share components across, and increasingly out of step with the client's engineering direction. Leadership made the call to bring it in line with the rest of the portfolio.</p>
+        </div>
+        <div class="case-col approach">
+          <div class="case-label">// approach</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">Rebuilt the application's component architecture around React's model, which meant working through the typical friction points of an AngularJS-to-React move: replacing two-way `$scope` data binding with explicit, unidirectional state management; converting AngularJS directives and controllers into reusable React components; swapping AngularJS's built-in dependency injection and services for React patterns (hooks/context); and re-implementing routing and filters/pipes with React Router and plain JS equivalents — all while keeping feature parity so the migration was invisible to end users.</p>
+        </div>
+      </div>
+      <div class="case-full">
+        <div class="case-label">// result</div>
+        <p class="placeholder" style="font-style:normal; color:var(--text-muted);">A frontend stack consistent with the rest of the client's web properties, a more modern component architecture, and lower onboarding cost for engineers moving between the client's applications.</p>
+        <div class="tags">
+          <span class="tag">AngularJS</span><span class="tag">React</span><span class="tag">Frontend migration</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <span class="case-num">CASE 03</span>
+        <span class="case-title">Inline SQL → stored procedures and UDTTs on MSSQL, at Keyfalcon Solutions</span>
+      </div>
+      <div class="case-grid">
+        <div class="case-col problem">
+          <div class="case-label">// problem</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">This client's data layer standardized on MSSQL with stored procedures rather than an ORM, but parts of the application still ran inline queries, and some business logic looped over data in application code before hitting the database — inconsistent with the client's architecture, and inefficient at scale.</p>
+        </div>
+        <div class="case-col approach">
+          <div class="case-label">// approach</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">Converted the inline queries into parameterized stored procedures matching the client's conventions, and re-architected the complex application-side loop logic to use MSSQL User-Defined Table Types (UDTTs) — passing structured, tabular data into a stored procedure in a single call instead of iterating and issuing repeated round trips from the application layer.</p>
+        </div>
+      </div>
+      <div class="case-full">
+        <div class="case-label">// result</div>
+        <p class="placeholder" style="font-style:normal; color:var(--text-muted);">Fewer database round trips, execution plans that could be cached and reused, a smaller SQL-injection surface from parameterized SPs, and a data layer consistent with how the rest of the client's systems were built.</p>
+        <div class="tags">
+          <span class="tag">MSSQL</span><span class="tag">Stored Procedures</span><span class="tag">UDTT</span><span class="tag">SQL Server</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-head">
+        <span class="case-num">CASE 04</span>
+        <span class="case-title">A custom parent-child dropdown, and an early lesson about reaching for libraries</span>
+      </div>
+      <div class="case-grid">
+        <div class="case-col problem">
+          <div class="case-label">// problem</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">My first assignment as an engineer at Keyfalcon Solutions: build a custom dropdown with checkboxes supporting parent-child selection — selecting a parent should select its children, and partial child selection needed to reflect back on the parent. The obvious starting point was an off-the-shelf UI library that claimed to do exactly this.</p>
+        </div>
+        <div class="case-col approach">
+          <div class="case-label">// approach</div>
+          <p class="placeholder" style="font-style:normal; color:var(--text-muted);">On the surface, the third-party library looked like it worked — but once tested against the actual business rules for parent-child state, its behavior didn't fully match what was needed. That gap led me to build the component from scratch instead, which meant working through every interaction case myself: parent-to-child propagation, indeterminate states for partial selection, and edge cases the library glossed over.</p>
+        </div>
+      </div>
+      <div class="case-full">
+        <div class="case-label">// result</div>
+        <p class="placeholder" style="font-style:normal; color:var(--text-muted);">A working component that matched the actual requirements — and a lesson that's stuck with me since: reaching for a library that promises a quick result means first understanding its internals well enough to know where it diverges from your business needs. Otherwise something can look functional on the surface while being wrong underneath.</p>
+        <div class="tags">
+          <span class="tag">Custom UI components</span><span class="tag">JavaScript</span><span class="tag">Engineering judgment</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="reveal">
+    <div class="sec-label">/contact</div>
+    <h2 class="sec-title">Get in touch</h2>
+    <div class="response-block">
+      <div class="resp-status">// 200 OK — ready to connect</div>
+      <div>email: bikashpaul758@gmail.com</div>
+      <div>phone: +91 7338564162</div>
+      <div>location: India — open to U.S. remote </div>
+      <div class="contact-links">
+        <a href="mailto:bikashpaul758@gmail.com">Email me</a>
+        <a href="https://www.linkedin.com/in/bikash-paul-6290a4113" target="_blank" rel="noopener">LinkedIn</a>        
+      </div>
+    </div>
+    <div class="foot-note">Bikash Paul · Senior Full Stack Engineer · Built as a single-page portfolio</div>
+  </footer>
+
+</div>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
